@@ -1,53 +1,47 @@
 import React, { useState } from 'react';
 
-export const CarTool = ( {cars: initialCar} ) => {
+import { ToolHeader } from './ToolHeader';
+import { CarTable } from  './CarTable';
+import { CarForm } from './CarForm';
+
+export const CarTool = ({ cars: initialCars }) => {
 
     const [ 
         carForm, // state data
         setCarForm, // function to update the state data and re-render
-        ] = useState({
+     ] = useState({
         make: '',
         model: '',
-        year:'1900',
+        year: 1900,
         color: '',
         price: 0,
     } /* initial state data, is only used on the initial render */);
 
-    const { cars, setCars } = useState(initialCar.concat())
+    const [ cars, setCars ] = useState(initialCars.concat())
 
-    const change= ({ target: target { name, type, value} }) => {
+    const change = ({ target: { name, type, value } }) => {
         setCarForm({
             ...carForm,
-            [ name ]: value == 'number'
+            [ name ]: type === 'number'
             ? Number(value)
             : value,
-
         });
-
-        setCarForm({
-            make: '',
-            model: '',
-            year:'1900',
-            color: '',
-            price: 0,
-        });
-
     };
 
-    const addCar = () => {
+    const addCar = (car) => {
+
         setCars(cars.concat({
-            ...carForm,
+            ...car,
             id: Math.max(...cars.map(c => c.id)) + 1,
-        }))
-
+        }));
     };
 
-   
-
-    return <>
-       <header>
-           <h1>Car Tool</h1>
-       </header>
+    return (
+      <>
+      
+       <ToolHeader headerText="Car Tool" />
+       <CarTable cars={cars}/>
+       <CarForm buttonText="Add Car" onSubmitcar={addCar} />
        <table>
            <thead>
             <tr>
@@ -97,7 +91,8 @@ export const CarTool = ( {cars: initialCar} ) => {
                 value={carForm.price} onChange={change} />
            </div>
            <button type="button" onClick={addCar}>Add Car</button>
-           
        </form>
-    </>;
+    </>
+ );
+
 };
