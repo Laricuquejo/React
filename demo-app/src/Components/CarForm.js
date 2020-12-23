@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
 
 export const CarForm = ({ onSubmitcar, buttonText }) => {
     
@@ -31,10 +33,7 @@ export const CarForm = ({ onSubmitcar, buttonText }) => {
             color: '',
             price: 0,
         });
-
-
-
-    };
+      };
 
     return <form>
         <div>
@@ -64,4 +63,14 @@ export const CarForm = ({ onSubmitcar, buttonText }) => {
         </div>
         <button type="button" onClick={submitCar}>{buttonText}</button>
     </form>
+    
+};
+
+CarForm.defaultProps = {
+    buttonText: 'Submit Car',
+};
+
+CarForm.propTypes = {
+    buttonText: PropTypes.string,
+    onSubmitCar: PropTypes.func.isRequired,
 };
